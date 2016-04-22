@@ -23,168 +23,157 @@
 //
 //#include <BaseProtocol.h>
 
-Define_Module(BikesApp);
+Define_Module( BikesApp );
 
-void BikesApp::initialize(int stage) {
+void BikesApp::initialize( int stage )
+{
+	BaseApp::initialize( stage );
 
-    BaseApp::initialize(stage);
+	if( stage == 0 )
+	{
+		//name the FSMs
+		leaderFsm.setName( "leaderFsm" );
+		followerFsm.setName( "followerFsm" );
+		leaverFsm.setName( "leaverFsm" );
+		bikeFsm.setName( "bikeFsm" );
+	}
 
-    if (stage == 0) {
+	if( stage == 1 )
+	{
+		//first change id depending on necessity
+		std::string strId = mobility->getExternalId();
+		std::stringstream ss;
+		if( strId.substr( 0, 8 ).compare( "platoon." ) == 0 )
+		{
+			myType = _CAR;
+			ss << strId.substr( 4 );
+			ss >> myId;
+		}
 
-        //name the FSMs
-        leaderFsm.setName("leaderFsm");
-        followerFsm.setName("followerFsm");
-        leaverFsm.setName("leaverFsm");
-        bikeFsm.setName("bikeFsm");
-    }
+		if( strId.substr( 0, 5 ).compare( "turn." ) == 0 )
+		{
+			myType = _CAR;
+			ss << strId.substr( 5 );
+			ss >> myId;
+		}
 
-    if (stage == 1) {
+		if( strId.substr( 0, 5 ).compare( "bike." ) == 0 )
+		{
+			myType = _BIKE;
+			ss << strId.substr( 5 );
+			ss >> myId;
+		}
+		//tell our MAC address to the unicast protocol
+		UnicastProtocolControlMessage *setMac =
+		    new UnicastProtocolControlMessage();
+		setMac->setControlCommand( SET_MAC_ADDRESS );
+		setMac->setCommandValue( myId );
+		sendControlDown( setMac );
 
-        //first change id depending on necessity
-        std::string strId = mobility->getExternalId();
-        std::stringstream ss;
-        if (strId.substr(0, 8).compare("platoon.") == 0) {
-            myType = _CAR;
-            ss << strId.substr(4);
-            ss >> myId;
-        }
-
-        if (strId.substr(0, 5).compare("turn.") == 0) {
-            myType = _CAR;
-            ss << strId.substr(5);
-            ss >> myId;
-        }
-
-        if (strId.substr(0, 5).compare("bike.") == 0) {
-            myType = _BIKE;
-            ss << strId.substr(5);
-            ss >> myId;
-        }
-        //tell our MAC address to the unicast protocol
-        UnicastProtocolControlMessage *setMac =
-                new UnicastProtocolControlMessage();
-        setMac->setControlCommand(SET_MAC_ADDRESS);
-        setMac->setCommandValue(myId);
-        sendControlDown(setMac);
-
-        //lane where the platoon is driving
-        int platoonLane = 0;
-        prepareManeuverCars(platoonLane);
-    }
-
+		//lane where the platoon is driving
+		int platoonLane = 0;
+		prepareManeuverCars( platoonLane );
+	}
 }
 
-void BikesApp::prepareManeuverCars(int platoonLane) {
+void BikesApp::prepareManeuverCars( int platoonLane )
+{
+	if( myType == _BIKE )
+	{
+		role = BIKE;
+		vehicleData.lane = -1;
+		vehicleData.platoonId = -1;
+		vehicleData.speed = 100 / 3.6;
+		vehicleData.formation.push_back( 0 );
+	}
+	else if( myType == _CAR )
+	{
+		switch( myId )
+		{
+			case 0: {
+				//this is the leader
+				traciVehicle->setCruiseControlDesiredSpeed( 100.0 / 3.6 );
+				traciVehicle->setActiveController( Plexe::ACC );
+				traciVehicle->setFixedLane( platoonLane );
+				role = LEADER;
 
-    if (myType == _BIKE){
-        role = BIKE;
-        vehicleData.lane = -1;
-        vehicleData.platoonId = -1;
-        vehicleData.speed = 100 / 3.6;
-        vehicleData.formation.push_back(0);
-    }
-    else if (myType == _CAR) {
-        switch (myId) {
+				vehicleData.lane = platoonLane;
+				vehicleData.platoonId = myId;
+				vehicleData.speed = 100 / 3.6;
+				vehicleData.formation.push_back( 0 );
+				vehicleData.formation.push_back( 1 );
+				vehicleData.formation.push_back( 2 );
+				vehicleData.formation.push_back( 3 );
 
-        case 0: {
-            //this is the leader
-            traciVehicle->setCruiseControlDesiredSpeed(100.0 / 3.6);
-            traciVehicle->setActiveController(Plexe::ACC);
-            traciVehicle->setFixedLane(platoonLane);
-            role = LEADER;
+				break;
+			}
 
-            vehicleData.lane = platoonLane;
-            vehicleData.platoonId = myId;
-            vehicleData.speed = 100 / 3.6;
-            vehicleData.formation.push_back(0);
-            vehicleData.formation.push_back(1);
-            vehicleData.formation.push_back(2);
-            vehicleData.formation.push_back(3);
+			default: {
+				//these are the followers which are already in the platoon
+				traciVehicle->setCruiseControlDesiredSpeed( 130.0 / 3.6 );
+				traciVehicle->setActiveController( Plexe::CACC );
+				traciVehicle->setFixedLane( platoonLane );
+				role = FOLLOWER;
 
-            break;
-        }
+				leaderId = 0;
+				frontId = myId - 1;
 
-        default: {
-            //these are the followers which are already in the platoon
-            traciVehicle->setCruiseControlDesiredSpeed(130.0 / 3.6);
-            traciVehicle->setActiveController(Plexe::CACC);
-            traciVehicle->setFixedLane(platoonLane);
-            role = FOLLOWER;
+				vehicleData.frontId = myId - 1;
+				vehicleData.lane = platoonLane;
+				vehicleData.leaderId = 0;
+				vehicleData.platoonId = 0;
+				vehicleData.speed = 100 / 3.6;
+				vehicleData.formation.push_back( 0 );
+				vehicleData.formation.push_back( 1 );
+				vehicleData.formation.push_back( 2 );
+				vehicleData.formation.push_back( 3 );
 
-            leaderId = 0;
-            frontId = myId - 1;
-
-            vehicleData.frontId = myId - 1;
-            vehicleData.lane = platoonLane;
-            vehicleData.leaderId = 0;
-            vehicleData.platoonId = 0;
-            vehicleData.speed = 100 / 3.6;
-            vehicleData.formation.push_back(0);
-            vehicleData.formation.push_back(1);
-            vehicleData.formation.push_back(2);
-            vehicleData.formation.push_back(3);
-
-            break;
-        }
-
-//        case 4: {
-//            //this is the car which will leave
-//            traciVehicle->setCruiseControlDesiredSpeed(100 / 3.6);
-//            traciVehicle->setFixedLane(2);
-//            traciVehicle->setActiveController(Plexe::ACC);
-//            role = LEAVER;
-//
-//            vehicleData.frontId = myId - 1;
-//            vehicleData.lane = platoonLane;
-//            vehicleData.leaderId = 0;
-//            vehicleData.platoonId = 0;
-//            vehicleData.speed = 100 / 3.6;
-//
-//            //TODO: start maneuver after seeing the turn!
-//            /*startManeuver = new cMessage();
-//             scheduleAt(simTime() + SimTime(10), startManeuver);*/
-//            break;
-//      }
-        }
-    }
+				break;
+			}
+		}
+	}
 }
 
-void BikesApp::finish() {
+void BikesApp::finish()
+{
+	if( startManeuver )
+	{
+		cancelAndDelete( startManeuver );
+		startManeuver = 0;
+	}
 
-    if (startManeuver) {
-        cancelAndDelete(startManeuver);
-        startManeuver = 0;
-    }
-
-    BaseApp::finish();
-
+	BaseApp::finish();
 }
 
-BikesMessage *BikesApp::generateMessage() {
-    BikesMessage *msg = new BikesMessage();
-    msg->setVehicleId(myId);
-    msg->setPlatoonId(vehicleData.platoonId);
-    msg->setPlatoonLane(vehicleData.lane);
-    msg->setPlatoonSpeed(vehicleData.speed);
-    return msg;
+BikesMessage *BikesApp::generateMessage()
+{
+	BikesMessage *msg = new BikesMessage();
+
+	msg->setVehicleId( myId );
+	msg->setPlatoonId( vehicleData.platoonId );
+	msg->setPlatoonLane( vehicleData.lane );
+	msg->setPlatoonSpeed( vehicleData.speed );
+	return msg;
 }
 
-void BikesApp::onData(WaveShortMessage *wsm) {
+void BikesApp::onData( WaveShortMessage *wsm )
+{
 }
 
-void BikesApp::handleSelfMsg(cMessage *msg) {
-
-    //this takes car of feeding data into CACC and reschedule the self message
-    BaseApp::handleSelfMsg(msg);
+void BikesApp::handleSelfMsg( cMessage *msg )
+{
+	//this takes car of feeding data into CACC and reschedule the self message
+	BaseApp::handleSelfMsg( msg );
 //
 //    if (msg == startManeuver)
 //        handleJoinerMsg(msg);
-
 }
 
-void BikesApp::handleLowerMsg(cMessage *msg) {
-    cMessage *dup = msg->dup();
-    BaseApp::handleLowerMsg(msg);
+void BikesApp::handleLowerMsg( cMessage *msg )
+{
+	cMessage *dup = msg->dup();
+	BaseApp::handleLowerMsg( msg );
+
 //    switch (role) {
 //    case LEADER:
 //        handleLeaderMsg(dup);
@@ -199,11 +188,11 @@ void BikesApp::handleLowerMsg(cMessage *msg) {
 //        ASSERT(false);
 //        break;
 //    };
-        handleMsg(dup);
+	handleMsg( dup );
 }
 
-void BikesApp::receiveMessage(cMessage *msg) {
-
+void BikesApp::receiveMessage( cMessage *msg )
+{
 //  switch (role) {
 //    case LEADER:
 //        handleLeaderMsg(msg);
@@ -221,21 +210,21 @@ void BikesApp::receiveMessage(cMessage *msg) {
 //        ASSERT(false);
 //        break;
 //    };
-        handleMsg(msg);
+	handleMsg( msg );
 }
 
 
 
-void BikesApp::handleMsg(cMessage *msg) {
+void BikesApp::handleMsg( cMessage *msg )
+{
+	std::cout << "msg TO ";
+	std::cout << myId;
+	std::cout << "\n";
+	BikesMessage *toSend = generateMessage();
 
-    std::cout << "msg TO ";
-    std::cout << myId;
-    std::cout << "\n";
-    BikesMessage *toSend = generateMessage();
-    toSend->setMessageType(BS_IDLE);
-    sendUnicast(toSend, vehicleData.leaderId);
-    FSM_Goto(bikeFsm, BS_STOP);
-
+	toSend->setMessageType( BS_IDLE );
+	sendUnicast( toSend, vehicleData.leaderId );
+	FSM_Goto( bikeFsm, BS_STOP );
 }
 
 
@@ -562,19 +551,23 @@ void BikesApp::handleMsg(cMessage *msg) {
 //
 //}
 
-void BikesApp::handleLowerControl(cMessage *msg) {
-    //lower control message
-    UnicastProtocolControlMessage *ctrl = 0;
+void BikesApp::handleLowerControl( cMessage *msg )
+{
+	//lower control message
+	UnicastProtocolControlMessage *ctrl = 0;
 
-    ctrl = dynamic_cast<UnicastProtocolControlMessage *>(msg);
-    //TODO: check for double free corruption
-    if (ctrl) {
-        delete ctrl;
-    } else {
-        delete msg;
-    }
-
+	ctrl = dynamic_cast<UnicastProtocolControlMessage *>( msg );
+	//TODO: check for double free corruption
+	if( ctrl )
+	{
+		delete ctrl;
+	}
+	else
+	{
+		delete msg;
+	}
 }
 
-void BikesApp::onBeacon(WaveShortMessage* wsm) {
+void BikesApp::onBeacon( WaveShortMessage* wsm )
+{
 }
