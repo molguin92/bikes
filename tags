@@ -2577,6 +2577,7 @@ initialize	src/veins/modules/application/platooning/UnicastProtocol.cc	/^void Un
 initialize	src/veins/modules/application/platooning/apps/BaseApp.cc	/^void BaseApp::initialize(int stage) {$/;"	f	class:BaseApp
 initialize	src/veins/modules/application/platooning/apps/SimplePlatooningApp.cc	/^void SimplePlatooningApp::initialize(int stage) {$/;"	f	class:SimplePlatooningApp
 initialize	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::initialize( int stage )$/;"	f	class:BikesApp
+initialize	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::initialize( int stage )$/;"	f	class:BikeManeuver
 initialize	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::initialize(int stage) {$/;"	f	class:JoinManeuverApp
 initialize	src/veins/modules/application/platooning/protocols/BaseProtocol.cc	/^void BaseProtocol::initialize(int stage) {$/;"	f	class:BaseProtocol
 initialize	src/veins/modules/application/platooning/protocols/SimplePlatooningBeaconing.cc	/^void SimplePlatooningBeaconing::initialize(int stage) {$/;"	f	class:SimplePlatooningBeaconing

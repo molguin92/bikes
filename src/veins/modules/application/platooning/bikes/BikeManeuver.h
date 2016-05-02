@@ -55,6 +55,7 @@ class BikeManeuver : public BaseApp
         int position;
         struct VEHICLE_DATA vehicleData;
         cMessage *startSim;
+        int myType;
 
     public:
         virtual void initialize(int stage);

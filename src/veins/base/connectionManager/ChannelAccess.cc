@@ -26,13 +26,12 @@
  **************************************************************************/
 
 
-#include "veins/base/connectionManager/ChannelAccess.h"
-
-#include <cassert>
-
 #include "veins/base/utils/FindModule.h"
 #include "veins/base/modules/BaseWorldUtility.h"
 #include "veins/base/connectionManager/BaseConnectionManager.h"
+#include "veins/base/connectionManager/ChannelAccess.h"
+
+#include <cassert>
 
 using std::endl;
 
