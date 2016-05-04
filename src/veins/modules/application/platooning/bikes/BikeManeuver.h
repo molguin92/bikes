@@ -28,7 +28,7 @@ class BikeManeuver : public BaseApp
 		{
 			LS_INIT = 0,
 			LS_IDLE = FSM_Steady( 1 ),
-			LS_BROADCAST = FSM_Steady( 2 )
+			LS_TURNING = FSM_Steady( 2 )
 		} LEADER_STATES;
 
 		typedef enum _FOLLOWER_STATES
@@ -40,21 +40,20 @@ class BikeManeuver : public BaseApp
 		typedef enum _BIKE_STATES
 		{
 			BS_INIT = 0,
-			BS_IDLE = FSM_Steady( 1 ),
-			BS_WARNING = FSM_Steady( 2 )
+			BS_GO = FSM_Steady( 1 ),
+			BS_STOP = FSM_Steady( 2 )
 		} BIKE_STATES;
 
         enum LEADER_MSGS {
-            LM_WARNING = 0,
-            LM_TURNING = 1,
-            LM_DONE_TURNING = 2
+            LM_TURNING = 0,
+            LM_DONE_TURNING = 1
         };
 
         cFSM leaderFSM, followerFSM, bikeFSM;
         ROLE myRole;
         int position;
         struct VEHICLE_DATA vehicleData;
-        cMessage *startSim;
+        cMessage *startTurn, *endTurn;
         int myType;
 
     public:
@@ -62,7 +61,8 @@ class BikeManeuver : public BaseApp
         virtual void finish();
 		BikeManeuver()
 		{
-			startSim = 0;
+			startTurn = 0;
+			endTurn = 0;
 		}
 
 	protected:
@@ -77,7 +77,7 @@ class BikeManeuver : public BaseApp
 		BikesMessage *generateMessage();
 
 		void handleLeaderMsg(cMessage *msg);
-		void handleJoinerMsg(cMessage *msg);
+		void handleBikeMsg(cMessage *msg);
 		void handleFollowerMsg(cMessage *msg);
 
 		void prepareManeuverCars(int platoonLane);
