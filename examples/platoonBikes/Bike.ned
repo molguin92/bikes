@@ -5,6 +5,6 @@ import org.car2x.veins.modules.mobility.traci.TraCIMobility;
 import org.car2x.veins.modules.nic.Nic80211p;
 
 
-module Bike extends Vehicle
+module Bike extends Car
 {
 }
