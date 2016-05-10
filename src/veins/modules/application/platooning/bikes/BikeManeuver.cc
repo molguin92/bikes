@@ -19,23 +19,25 @@ void BikeManeuver::initialize( int stage )
         std::string strId = mobility->getExternalId();
         std::stringstream ss;
 
-        if( strId.substr(0, 4).compare("bike") == 0 ){
+        if( strId.substr(0, 5).compare("bikes") == 0 ){
             // I am a bike
             myType = TBIKE;
-            ss << strId.substr(5);
+            ss << strId.substr(6);
             ss >> myId;
         }
-        else if ( strId.substr(0, 3).compare("car") == 0)
+        else if ( strId.substr(0, 7).compare("platoon") == 0)
         {
             // I am a car
             myType = TCAR;
-            ss << strId.substr(4);
+            ss << strId.substr(8);
             ss >> myId;
             myId += 100; // to avoid ID conflicts between bikes and cars
         }
         else
         {
-            std::cerr << "Wrong vehicle type.";
+            std::cerr << "Wrong vehicle type: ";
+            std::cerr << strId;
+            std::cerr << "\n";
             exit(69);
         }
 
@@ -44,7 +46,7 @@ void BikeManeuver::initialize( int stage )
         setMac->setCommandValue(myId);
         sendControlDown(setMac);
 
-        int platoonLane = 0;
+        int platoonLane = 1;
         prepareManeuverCars(platoonLane);
         break;
     }
@@ -68,7 +70,7 @@ void BikeManeuver::prepareManeuverCars( int platoonLane )
             //this is the leader
             traciVehicle->setCruiseControlDesiredSpeed( 100.0 / 3.6 );
             traciVehicle->setActiveController( Plexe::ACC );
-            traciVehicle->setFixedLane( platoonLane );
+            //traciVehicle->setFixedLane( platoonLane );
             myRole = LEADER;
 
             vehicleData.lane = platoonLane;
@@ -90,7 +92,7 @@ void BikeManeuver::prepareManeuverCars( int platoonLane )
             //these are the followers which are already in the platoon
             traciVehicle->setCruiseControlDesiredSpeed( 130.0 / 3.6 );
             traciVehicle->setActiveController( Plexe::CACC );
-            traciVehicle->setFixedLane( platoonLane );
+            //traciVehicle->setFixedLane( platoonLane );
             myRole = FOLLOWER;
 
             leaderId = 100;

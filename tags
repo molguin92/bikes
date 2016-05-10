@@ -80,12 +80,12 @@ BITRATES_80211P	src/veins/modules/utility/Consts80211p.h	/^const uint64_t BITRAT
 BK	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	30;"	d
 BREAKPOINTPATHLOSSMODEL_H_	src/veins/modules/analogueModel/BreakpointPathlossModel.h	2;"	d
 BROKEN	src/veins/base/utils/HostState.h	/^          BROKEN,	\/** Host is not active because of some failure$/;"	e	enum:HostState::States
+BS_GO	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			BS_GO = FSM_Steady( 1 ),$/;"	e	enum:BikeManeuver::_BIKE_STATES
 BS_IDLE	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^            BS_IDLE = FSM_Steady(1), \/\/normal riding$/;"	e	enum:BikesApp::_BIKE_STATES
-BS_IDLE	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			BS_IDLE = FSM_Steady( 1 ),$/;"	e	enum:BikeManeuver::_BIKE_STATES
 BS_INIT	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^            BS_INIT = 0,$/;"	e	enum:BikesApp::_BIKE_STATES
 BS_INIT	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			BS_INIT = 0,$/;"	e	enum:BikeManeuver::_BIKE_STATES
 BS_STOP	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^            BS_STOP = FSM_Steady(2)  \/\/received a signal to stop from a follower vehicle$/;"	e	enum:BikesApp::_BIKE_STATES
-BS_WARNING	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			BS_WARNING = FSM_Steady( 2 )$/;"	e	enum:BikeManeuver::_BIKE_STATES
+BS_STOP	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			BS_STOP = FSM_Steady( 2 )$/;"	e	enum:BikeManeuver::_BIKE_STATES
 BW_OFDM_10_MHZ	src/veins/modules/utility/ConstsPhy.h	/^	BW_OFDM_10_MHZ,$/;"	e	enum:Bandwidth
 BW_OFDM_20_MHZ	src/veins/modules/utility/ConstsPhy.h	/^	BW_OFDM_20_MHZ$/;"	e	enum:Bandwidth
 BW_OFDM_5_MHZ	src/veins/modules/utility/ConstsPhy.h	/^	BW_OFDM_5_MHZ,$/;"	e	enum:Bandwidth
@@ -143,7 +143,7 @@ BaseWorldUtility	src/veins/base/modules/BaseWorldUtility.h	/^class MIXIM_API Bas
 BatteryAccess	src/veins/base/modules/BatteryAccess.cc	/^BatteryAccess::BatteryAccess():$/;"	f	class:BatteryAccess
 BatteryAccess	src/veins/base/modules/BatteryAccess.cc	/^BatteryAccess::BatteryAccess(unsigned stacksize):$/;"	f	class:BatteryAccess
 BatteryAccess	src/veins/base/modules/BatteryAccess.h	/^class MIXIM_API BatteryAccess: public BaseModule {$/;"	c	namespace:Veins
-BikeManeuver	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^Define_Module( BikeManeuver );$/;"	v
+BikeManeuver	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^Define_Module(BikeManeuver);$/;"	v
 BikeManeuver	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^		BikeManeuver()$/;"	f	class:BikeManeuver
 BikeManeuver	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^class BikeManeuver : public BaseApp$/;"	c
 BikeManeuver_H_	src/veins/modules/application/platooning/bikes/BikeManeuver.h	2;"	d
@@ -550,23 +550,22 @@ LINEAR	src/veins/base/phyLayer/MappingBase.h	/^		LINEAR$/;"	e	enum:Mapping::Inte
 LLM_IN_PLATOON	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^            LLM_IN_PLATOON = 6,$/;"	e	enum:BikesApp::LEAVER_MSGS
 LLM_NOTIFY_LEAVE	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^            LLM_NOTIFY_LEAVE = 7$/;"	e	enum:BikesApp::LEAVER_MSGS
 LM_BECOME_LEAVER	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^			LM_BECOME_LEAVER = 1,$/;"	e	enum:BikesApp::LEADER_MSGS
-LM_DONE_TURNING	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^            LM_DONE_TURNING = 2$/;"	e	enum:BikeManeuver::LEADER_MSGS
+LM_DONE_TURNING	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^            LM_DONE_TURNING = 1$/;"	e	enum:BikeManeuver::LEADER_MSGS
 LM_INCREASE_SPACING	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LM_INCREASE_SPACING = 3$/;"	e	enum:JoinManeuverApp::LEADER_MSGS
 LM_JOIN_PLATOON	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LM_JOIN_PLATOON = 1,$/;"	e	enum:JoinManeuverApp::LEADER_MSGS
 LM_MOVE_IN_POSITION	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LM_MOVE_IN_POSITION = 0,$/;"	e	enum:JoinManeuverApp::LEADER_MSGS
-LM_TURNING	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^            LM_TURNING = 1,$/;"	e	enum:BikeManeuver::LEADER_MSGS
+LM_TURNING	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^            LM_TURNING = 0,$/;"	e	enum:BikeManeuver::LEADER_MSGS
 LM_UPDATE_FORMATION	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LM_UPDATE_FORMATION = 2,$/;"	e	enum:JoinManeuverApp::LEADER_MSGS
-LM_WARNING	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^            LM_WARNING = 0,$/;"	e	enum:BikeManeuver::LEADER_MSGS
 LOGNORMALSHADOWING_H_	src/veins/modules/analogueModel/LogNormalShadowing.h	17;"	d
 LOWER_CONTROL	src/veins/base/utils/PassedMessage.h	/^	LOWER_CONTROL$/;"	e	enum:PassedMessage::gates_t
 LOWER_DATA	src/veins/base/utils/PassedMessage.h	/^	LOWER_DATA,$/;"	e	enum:PassedMessage::gates_t
-LS_BROADCAST	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			LS_BROADCAST = FSM_Steady( 2 )$/;"	e	enum:BikeManeuver::_LEADER_STATES
 LS_IDLE	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			LS_IDLE = FSM_Steady( 1 ),$/;"	e	enum:BikeManeuver::_LEADER_STATES
 LS_INIT	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^			LS_INIT = 0,$/;"	e	enum:BikesApp::_LEADER_STATES
 LS_INIT	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			LS_INIT = 0,$/;"	e	enum:BikeManeuver::_LEADER_STATES
 LS_INIT	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LS_INIT = 0,$/;"	e	enum:JoinManeuverApp::_LEADER_STATES
 LS_LEADING	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^			LS_LEADING = FSM_Steady(1) \/\/being a good leader$/;"	e	enum:BikesApp::_LEADER_STATES
 LS_LEADING	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LS_LEADING = FSM_Steady(1),$/;"	e	enum:JoinManeuverApp::_LEADER_STATES
+LS_TURNING	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^			LS_TURNING = FSM_Steady( 2 )$/;"	e	enum:BikeManeuver::_LEADER_STATES
 LS_WAIT_JOINER_IN_POSITION	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LS_WAIT_JOINER_IN_POSITION = FSM_Steady(2),$/;"	e	enum:JoinManeuverApp::_LEADER_STATES
 LS_WAIT_JOINER_TO_JOIN	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.h	/^			LS_WAIT_JOINER_TO_JOIN = FSM_Steady(3)$/;"	e	enum:JoinManeuverApp::_LEADER_STATES
 LV	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	29;"	d
@@ -1833,6 +1832,7 @@ end	src/veins/base/phyLayer/MappingBase.h	/^	const_iterator end() const { return
 end	src/veins/base/phyLayer/MappingBase.h	/^	iterator end() { return values.end(); }$/;"	f	class:Argument
 endIt	src/veins/base/phyLayer/ChannelInfo.h	/^		ItMatrix endIt;$/;"	m	class:ChannelInfo::BaseIntersectionIterator
 endSwitch	src/veins/base/phyLayer/PhyUtils.cc	/^void Radio::endSwitch(simtime_t_cref now)$/;"	f	class:Radio
+endTurn	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^        cMessage *startTurn, *endTurn;$/;"	m	class:BikeManeuver
 engineTau	src/veins/modules/application/platooning/apps/BaseApp.h	/^		double caccXi, caccOmegaN, caccC1, engineTau;$/;"	m	class:BaseApp
 entries	src/veins/base/phyLayer/MappingUtils.h	/^	interpolator_map_type       entries;$/;"	m	class:MultiDimMapping
 entries	src/veins/base/phyLayer/MappingUtils.h	/^	interpolator_map_type entries;$/;"	m	class:TimeMapping
@@ -1904,6 +1904,7 @@ finish	src/veins/modules/application/platooning/UnicastProtocol.cc	/^void Unicas
 finish	src/veins/modules/application/platooning/apps/BaseApp.cc	/^void BaseApp::finish() {$/;"	f	class:BaseApp
 finish	src/veins/modules/application/platooning/apps/SimplePlatooningApp.cc	/^void SimplePlatooningApp::finish() {$/;"	f	class:SimplePlatooningApp
 finish	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::finish()$/;"	f	class:BikesApp
+finish	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::finish() {$/;"	f	class:BikeManeuver
 finish	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::finish() {$/;"	f	class:JoinManeuverApp
 finish	src/veins/modules/application/platooning/protocols/BaseProtocol.cc	/^void BaseProtocol::finish() {$/;"	f	class:BaseProtocol
 finish	src/veins/modules/application/platooning/protocols/SimplePlatooningBeaconing.cc	/^void SimplePlatooningBeaconing::finish(){$/;"	f	class:SimplePlatooningBeaconing
@@ -1958,6 +1959,7 @@ gateToString	src/veins/base/utils/PassedMessage.h	/^    static const char *gateT
 gateType	src/veins/base/utils/PassedMessage.h	/^    gates_t gateType;$/;"	m	class:PassedMessage
 gates_t	src/veins/base/utils/PassedMessage.h	/^    enum gates_t {$/;"	g	class:PassedMessage
 generateMessage	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^BikesMessage *BikesApp::generateMessage()$/;"	f	class:BikesApp
+generateMessage	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^BikesMessage * BikeManeuver::generateMessage()$/;"	f	class:BikeManeuver
 generateMessage	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^ManeuverMessage *JoinManeuverApp::generateMessage() {$/;"	f	class:JoinManeuverApp
 generateVehicle	src/veins/modules/mobility/traci/TestTrafficManager.h	/^		cMessage *generateVehicle;$/;"	m	class:TestTrafficManager
 genericGetCoord	src/veins/modules/mobility/traci/TraCICommandInterface.cc	/^Coord TraCICommandInterface::genericGetCoord(uint8_t commandId, std::string objectId, uint8_t variableId, uint8_t responseId) {$/;"	f	class:Veins::TraCICommandInterface
@@ -2425,19 +2427,23 @@ handleAirFrame	src/veins/base/phyLayer/BasePhyLayer.cc	/^void BasePhyLayer::hand
 handleAirFrameEndReceive	src/veins/base/phyLayer/BasePhyLayer.cc	/^void BasePhyLayer::handleAirFrameEndReceive(AirFrame* frame) {$/;"	f	class:BasePhyLayer
 handleAirFrameReceiving	src/veins/base/phyLayer/BasePhyLayer.cc	/^void BasePhyLayer::handleAirFrameReceiving(AirFrame* frame) {$/;"	f	class:BasePhyLayer
 handleAirFrameStartReceive	src/veins/base/phyLayer/BasePhyLayer.cc	/^void BasePhyLayer::handleAirFrameStartReceive(AirFrame* frame) {$/;"	f	class:BasePhyLayer
+handleBikeMsg	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::handleBikeMsg(cMessage * msg)$/;"	f	class:BikeManeuver
 handleBorderMsg	src/veins/base/modules/BaseMobility.cc	/^void BaseMobility::handleBorderMsg(cMessage * msg)$/;"	f	class:BaseMobility
 handleChannelSenseRequest	src/veins/base/phyLayer/BaseDecider.cc	/^simtime_t BaseDecider::handleChannelSenseRequest(ChannelSenseRequest* request) {$/;"	f	class:BaseDecider
 handleChannelSenseRequest	src/veins/base/phyLayer/BasePhyLayer.cc	/^void BasePhyLayer::handleChannelSenseRequest(cMessage* msg) {$/;"	f	class:BasePhyLayer
 handleChannelSenseRequest	src/veins/base/phyLayer/Decider.cc	/^simtime_t Decider::handleChannelSenseRequest(ChannelSenseRequest* request) {$/;"	f	class:Decider
+handleFollowerMsg	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::handleFollowerMsg(cMessage * msg)$/;"	f	class:BikeManeuver
 handleFollowerMsg	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::handleFollowerMsg(cMessage *msg) {$/;"	f	class:JoinManeuverApp
 handleHostState	src/veins/base/modules/BaseModule.cc	/^void BaseModule::handleHostState(const HostState& state)$/;"	f	class:BaseModule
 handleIfOutside	src/veins/base/modules/BaseMobility.cc	/^bool BaseMobility::handleIfOutside(BorderPolicy policy, Coord& stepTarget,$/;"	f	class:BaseMobility
 handleJoinerMsg	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::handleJoinerMsg(cMessage *msg) {$/;"	f	class:JoinManeuverApp
+handleLeaderMsg	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::handleLeaderMsg(cMessage * msg)$/;"	f	class:BikeManeuver
 handleLeaderMsg	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::handleLeaderMsg(cMessage *msg) {$/;"	f	class:JoinManeuverApp
 handleLowerControl	src/veins/base/modules/BaseApplLayer.h	/^	virtual void handleLowerControl(cMessage* msg) {$/;"	f	class:BaseApplLayer
 handleLowerControl	src/veins/base/modules/BaseMacLayer.cc	/^void BaseMacLayer::handleLowerControl(cMessage* msg)$/;"	f	class:BaseMacLayer
 handleLowerControl	src/veins/modules/application/platooning/apps/BaseApp.cc	/^void BaseApp::handleLowerControl(cMessage *msg) {$/;"	f	class:BaseApp
 handleLowerControl	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::handleLowerControl( cMessage *msg )$/;"	f	class:BikesApp
+handleLowerControl	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::handleLowerControl(cMessage *msg) {$/;"	f	class:BikeManeuver
 handleLowerControl	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::handleLowerControl(cMessage *msg) {$/;"	f	class:JoinManeuverApp
 handleLowerControl	src/veins/modules/application/platooning/protocols/BaseProtocol.cc	/^void BaseProtocol::handleLowerControl(cMessage *msg) {$/;"	f	class:BaseProtocol
 handleLowerControl	src/veins/modules/mac/ieee80211p/Mac1609_4.cc	/^void Mac1609_4::handleLowerControl(cMessage* msg) {$/;"	f	class:Mac1609_4
@@ -2447,6 +2453,7 @@ handleLowerMsg	src/veins/modules/application/ieee80211p/BaseWaveApplLayer.cc	/^v
 handleLowerMsg	src/veins/modules/application/platooning/UnicastProtocol.cc	/^void UnicastProtocol::handleLowerMsg(cMessage *msg)$/;"	f	class:UnicastProtocol
 handleLowerMsg	src/veins/modules/application/platooning/apps/BaseApp.cc	/^void BaseApp::handleLowerMsg(cMessage *msg) {$/;"	f	class:BaseApp
 handleLowerMsg	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::handleLowerMsg( cMessage *msg )$/;"	f	class:BikesApp
+handleLowerMsg	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::handleLowerMsg(cMessage *msg) {$/;"	f	class:BikeManeuver
 handleLowerMsg	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::handleLowerMsg(cMessage *msg) {$/;"	f	class:JoinManeuverApp
 handleLowerMsg	src/veins/modules/application/platooning/protocols/BaseProtocol.cc	/^void BaseProtocol::handleLowerMsg(cMessage *msg) {$/;"	f	class:BaseProtocol
 handleLowerMsg	src/veins/modules/application/traci/TraCITestApp.cc	/^void TraCITestApp::handleLowerMsg(cMessage* msg) {$/;"	f	class:TraCITestApp
@@ -2476,6 +2483,7 @@ handleSelfMsg	src/veins/modules/application/platooning/UnicastProtocol.cc	/^void
 handleSelfMsg	src/veins/modules/application/platooning/apps/BaseApp.cc	/^void BaseApp::handleSelfMsg(cMessage *msg) {$/;"	f	class:BaseApp
 handleSelfMsg	src/veins/modules/application/platooning/apps/SimplePlatooningApp.cc	/^void SimplePlatooningApp::handleSelfMsg(cMessage *msg) {$/;"	f	class:SimplePlatooningApp
 handleSelfMsg	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::handleSelfMsg( cMessage *msg )$/;"	f	class:BikesApp
+handleSelfMsg	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::handleSelfMsg(cMessage * msg)$/;"	f	class:BikeManeuver
 handleSelfMsg	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::handleSelfMsg(cMessage *msg) {$/;"	f	class:JoinManeuverApp
 handleSelfMsg	src/veins/modules/application/platooning/protocols/BaseProtocol.cc	/^void BaseProtocol::handleSelfMsg(cMessage *msg) {$/;"	f	class:BaseProtocol
 handleSelfMsg	src/veins/modules/application/platooning/protocols/SimplePlatooningBeaconing.cc	/^void SimplePlatooningBeaconing::handleSelfMsg(cMessage *msg) {$/;"	f	class:SimplePlatooningBeaconing
@@ -2936,6 +2944,7 @@ mySCH	src/veins/modules/application/ieee80211p/BaseWaveApplLayer.h	/^		int mySCH
 mySCH	src/veins/modules/mac/ieee80211p/Mac1609_4.h	/^		int mySCH;$/;"	m	class:Mac1609_4
 myStartTime	src/veins/modules/phy/Decider80211p.h	/^		double myStartTime;$/;"	m	class:Decider80211p
 myType	src/veins/modules/application/platooning/bikeplatoons/BikesApp.h	/^        int myType;$/;"	m	class:BikesApp
+myType	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^        int myType;$/;"	m	class:BikeManeuver
 nAttempts	src/veins/modules/application/platooning/UnicastProtocol.h	/^		int nAttempts;$/;"	m	class:UnicastProtocol
 n_dbps	src/veins/modules/mac/ieee80211p/Mac1609_4.h	/^		double n_dbps;$/;"	m	class:Mac1609_4
 name	src/veins/base/utils/PassedMessage.h	/^    const char* name;$/;"	m	class:PassedMessage
@@ -3000,6 +3009,7 @@ onBeacon	src/veins/modules/application/platooning/UnicastProtocol.cc	/^void Unic
 onBeacon	src/veins/modules/application/platooning/apps/BaseApp.cc	/^void BaseApp::onBeacon(WaveShortMessage* wsm) {$/;"	f	class:BaseApp
 onBeacon	src/veins/modules/application/platooning/apps/SimplePlatooningApp.cc	/^void SimplePlatooningApp::onBeacon(WaveShortMessage* wsm) {$/;"	f	class:SimplePlatooningApp
 onBeacon	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::onBeacon( WaveShortMessage* wsm )$/;"	f	class:BikesApp
+onBeacon	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::onBeacon(WaveShortMessage* wsm) {$/;"	f	class:BikeManeuver
 onBeacon	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::onBeacon(WaveShortMessage* wsm) {$/;"	f	class:JoinManeuverApp
 onBeacon	src/veins/modules/application/traci/TraCIDemo11p.cc	/^void TraCIDemo11p::onBeacon(WaveShortMessage* wsm) {$/;"	f	class:TraCIDemo11p
 onBeacon	src/veins/modules/application/traci/TraCIDemoRSU11p.cc	/^void TraCIDemoRSU11p::onBeacon(WaveShortMessage* wsm) {$/;"	f	class:TraCIDemoRSU11p
@@ -3007,6 +3017,7 @@ onData	src/veins/modules/application/platooning/UnicastProtocol.cc	/^void Unicas
 onData	src/veins/modules/application/platooning/apps/BaseApp.cc	/^void BaseApp::onData(WaveShortMessage *wsm) {$/;"	f	class:BaseApp
 onData	src/veins/modules/application/platooning/apps/SimplePlatooningApp.cc	/^void SimplePlatooningApp::onData(WaveShortMessage *wsm) {$/;"	f	class:SimplePlatooningApp
 onData	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::onData( WaveShortMessage *wsm )$/;"	f	class:BikesApp
+onData	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::onData(WaveShortMessage *wsm) {$/;"	f	class:BikeManeuver
 onData	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::onData(WaveShortMessage *wsm) {$/;"	f	class:JoinManeuverApp
 onData	src/veins/modules/application/traci/TraCIDemo11p.cc	/^void TraCIDemo11p::onData(WaveShortMessage* wsm) {$/;"	f	class:TraCIDemo11p
 onData	src/veins/modules/application/traci/TraCIDemoRSU11p.cc	/^void TraCIDemoRSU11p::onData(WaveShortMessage* wsm) {$/;"	f	class:TraCIDemoRSU11p
@@ -3247,6 +3258,7 @@ prefix	run	/^prefix = []$/;"	v
 prefix	src/scripts/debug.in.py	/^prefix = ['gdb', '--args']$/;"	v
 prefix	src/scripts/run.in.py	/^prefix = []$/;"	v
 prepareManeuverCars	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::prepareManeuverCars( int platoonLane )$/;"	f	class:BikesApp
+prepareManeuverCars	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::prepareManeuverCars( int platoonLane )$/;"	f	class:BikeManeuver
 prepareManeuverCars	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::prepareManeuverCars(int platoonLane) {$/;"	f	class:JoinManeuverApp
 prepareWSM	src/veins/modules/application/ieee80211p/BaseWaveApplLayer.cc	/^WaveShortMessage*  BaseWaveApplLayer::prepareWSM(std::string name, int lengthBits, t_channel channel, int priority, int rcvId, int serial) {$/;"	f	class:BaseWaveApplLayer
 print	src/veins/base/phyLayer/MappingBase.h	/^	stream& print(stream&                out,$/;"	f	class:ConstMapping
@@ -3295,6 +3307,7 @@ read_launch_config	sumo-launchd.py	/^def read_launch_config(conn):$/;"	f
 realpath	src/veins/modules/mobility/traci/TraCICommandInterface.cc	12;"	d	file:
 realpath	src/veins/modules/mobility/traci/TraCIScreenRecorder.cc	26;"	d	file:
 receiveMessage	src/veins/modules/application/platooning/bikeplatoons/BikesApp.cc	/^void BikesApp::receiveMessage( cMessage *msg )$/;"	f	class:BikesApp
+receiveMessage	src/veins/modules/application/platooning/bikes/BikeManeuver.cc	/^void BikeManeuver::receiveMessage(cMessage *msg) {$/;"	f	class:BikeManeuver
 receiveMessage	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.cc	/^void JoinManeuverApp::receiveMessage(cMessage *msg) {$/;"	f	class:JoinManeuverApp
 receiveMessage	src/veins/modules/mobility/traci/TraCIConnection.cc	/^std::string TraCIConnection::receiveMessage() {$/;"	f	class:Veins::TraCIConnection
 receiveSequenceNumbers	src/veins/modules/application/platooning/UnicastProtocol.h	/^		std::map<int, int> receiveSequenceNumbers;$/;"	m	class:UnicastProtocol
@@ -3685,9 +3698,9 @@ startManeuver	src/veins/modules/application/platooning/maneuver/JoinManeuverApp.
 startPos	src/veins/base/utils/Move.h	/^    Coord startPos;$/;"	m	class:Move
 startPos_var	src/veins/base/messages/BorderMsg_m.h	/^    Coord startPos_var;$/;"	m	class:BorderMsg
 startRecording	src/veins/base/phyLayer/ChannelInfo.h	/^	void startRecording(simtime_t_cref start)$/;"	f	class:ChannelInfo
-startSim	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^        cMessage *startSim;$/;"	m	class:BikeManeuver
 startTime	src/veins/base/utils/Move.h	/^    simtime_t startTime;$/;"	m	class:Move
 startTime	src/veins/modules/mobility/traci/TraCIMobility.h	/^				simtime_t startTime; \/**< for statistics: start time *\/$/;"	m	class:Veins::TraCIMobility::Statistics
+startTurn	src/veins/modules/application/platooning/bikes/BikeManeuver.h	/^        cMessage *startTurn, *endTurn;$/;"	m	class:BikeManeuver
 state	src/veins/base/phyLayer/PhyUtils.h	/^	int state;$/;"	m	class:Veins::Radio
 state	src/veins/base/utils/HostState.h	/^    States state;$/;"	m	class:HostState
 state_var	src/veins/base/messages/AirFrame_m.h	/^    int state_var;$/;"	m	class:Veins::AirFrame
